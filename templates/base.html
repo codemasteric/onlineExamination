@@ -19,9 +19,9 @@
     <!-- Top bar -->
     {% include 'partials/_topbar.html' %}
     <!-- Nav bar -->
-    {% if '' in request.path %}
+    {% if '/' == request.path %}
         {% include 'partials/_navbar_login.html' %}
-    {% elif 'logout' in request.path %}
+    {% elif '/logout' in request.path %}
         {% include 'partials/_navbar_logout.html' %}
     {% else %}
         {% include 'partials/_navbar.html' %}
