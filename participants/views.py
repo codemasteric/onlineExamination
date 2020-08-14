@@ -1,10 +1,19 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 
 def login(request):
-    return render(request, 'participants/login.html')
+    if request.method == 'POST':
+        messages.error(request, 'Testing error messages')
+        return redirect('change_password')
+    else:
+        return render(request, 'participants/login.html')
 
 def logout(request):
     return render(request, 'participants/logout.html')
 
 def change_password(request):
-    return render(request, 'participants/change_password.html')
+    if request.method == 'POST':
+        messages.error(request, 'Testing error messages')
+        return redirect('change_password')
+    else:
+        return render(request, 'participants/change_password.html')
