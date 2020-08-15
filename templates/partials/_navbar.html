@@ -1,0 +1,59 @@
+ {% load static %}
+ <!-- Navbar -->
+ <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'login' %}">
+        <img src="{% static 'img/logo_1.png' %}" class="logo" alt="">
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <ul class="navbar-nav">
+          <li 
+            {% if 'exams/' == request.path %}
+              class="nav-item active mr-3"
+            {% else %}
+              class="nav-item  mr-3"
+            {% endif %}
+          >
+            <a class="nav-link" href="{% url 'instruction' %}">Instructions</a>
+          </li>
+          <li 
+            {% if 'question/' in request.path %}
+              class="nav-item active mr-3"
+            {% else %}
+              class="nav-item  mr-3"
+            {% endif %}
+          >
+            <a class="nav-link" href="{% url 'question' %}">Questions</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+          <li 
+            {% if 'change_password' in request.path %}
+              class="nav-item active mr-3"
+            {% else %}
+              class="nav-item  mr-3"
+            {% endif %}
+          >
+            <a class="nav-link" href="{% url 'change_password' %}">
+              <i class="fas fa-user-plus"></i> Change Password</a>
+          </li>
+          <li
+            {% if 'logout' in request.path %}
+              class="nav-item active mr-3"
+            {% else %}
+              class="nav-item  mr-3"
+            {% endif %} 
+          >
+            <a class="nav-link" href="{% url 'logout' %}">
+              <i class="fas fa-sign-in-alt"></i>
+
+              Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>

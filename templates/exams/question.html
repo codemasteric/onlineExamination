@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+     <!-- The Instructions section -->
+     <section class="pb-5">
+            <div class="">
+                <div class="row">
+                    <div class="col-lg-7 mx-auto"> 
+                        <!-- Timeline -->
+                        {% if questions %}
+                            <form action="#" method="">
+                                <ul class="timeline">
+                                    {% for question in questions %}
+                                        <li class="timeline-item bg-white rounded ml-3 p-4 shadow">
+                                            <div class="timeline-arrow"></div>
+                                            <h2 class="h5 mb-0">{{ question.question_text }}</h2><span class="small text-gray"><i class="fa fa-clock-o mr-1"></i>2 mins</span>
+                                            <p class="text-small mt-2 font-weight-light">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                    <label class="form-check-label" for="defaultCheck1">
+                                                        {{ question.option_1 }}
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                    <label class="form-check-label" for="defaultCheck1">
+                                                        {{ question.option_2 }}
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                    <label class="form-check-label" for="defaultCheck1">
+                                                        {{ question.option_3 }}
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                    <label class="form-check-label" for="defaultCheck1">
+                                                        {{ question.option_4 }}
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                    <label class="form-check-label" for="defaultCheck1">
+                                                        {{ question.option_5 }}
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                    <label class="form-check-label" for="defaultCheck1">
+                                                        {{ question.correct_option }}
+                                                    </label>
+                                                </div>
+                                            </p>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="ml-auto text-center">
+                                    <input type="text" value="Submit" class="btn btn-primary rounded-pill">
+                                </div>
+                            </form>
+                        {% else %}
+                            <div class="col-md-12 text-center">
+                                <p>No Questions Available</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+{% endblock %}
