@@ -15,8 +15,11 @@ class Participant(models.Model):
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        Participant.objects.create(user=instance)
+        Participant.objects.create(user=instance, email=instance.email)
 
 @receiver(post_save, sender=User)
 def save_user_profile(sender, instance, **kwargs):
-    instance.participant.save()
+    participant = Participant.objects.get(user=instance.pk)
+    participant.email = instance.email
+    participant.save()
+    # pass
