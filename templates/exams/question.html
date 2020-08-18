@@ -2,61 +2,76 @@
 
 {% block content %}
      <!-- The Instructions section -->
-     <section class="pb-5">
+     <section class="pb-5" id="page">
+         <!-- Alerts -->
             <div class="">
                 <div class="row">
-                    <div class="col-lg-7 mx-auto"> 
+                    <div class="col-lg-7 mx-auto">
+                        {% include 'partials/_alerts.html' %} 
                         <!-- Timeline -->
                         {% if questions %}
-                            <form action="#" method="">
+                            <form action="{% url 'question' %}" method="POST">
+                            {% csrf_token %}
                                 <ul class="timeline">
                                     {% for question in questions %}
                                         <li class="timeline-item bg-white rounded ml-3 p-4 shadow">
                                             <div class="timeline-arrow"></div>
                                             <h2 class="h5 mb-0">{{ question.question_text }}</h2><span class="small text-gray"><i class="fa fa-clock-o mr-1"></i>2 mins</span>
                                             <p class="text-small mt-2 font-weight-light">
+                                        {% if question.option_1 %}
+                                            <div class="form-check">
+                                                <input class="form-check-input" name="option_1" type="checkbox" value="{{ question.option_1 }}" id="option_1">
+                                                <label class="form-check-label" for="option_1">
+                                                    {{ question.option_1 }}
+                                                </label>
+                                            </div>
+                                        {% endif %}
+                                        {% if question.option_2 %}
+                                            <div class="form-check">
+                                                <input class="form-check-input" name="option_2" type="checkbox" value="{{ question.option_2 }}" id="option_2">
+                                                <label class="form-check-label" for="option_2">
+                                                    {{ question.option_2 }}
+                                                </label>
+                                            </div>
+                                        {% endif %}
+                                        {% if question.option_3 %}
+                                            <div class="form-check">
+                                                <input class="form-check-input" name="option_3" type="checkbox" value="{{ question.option_3 }}" id="option_3">
+                                                <label class="form-check-label" for="option_3">
+                                                    {{ question.option_3 }}
+                                                </label>
+                                            </div>
+                                        {% endif %}
+                                        {% if question.option_4 %}
+                                            <div class="form-check">
+                                                <input class="form-check-input" name="option_4" type="checkbox" value="{{ question.option_4 }}" id="option_4">
+                                                <label class="form-check-label" for="option_4">
+                                                    {{ question.option_4 }}
+                                                </label>
+                                            </div>
+                                        {% endif %}
+                                        {% if question.option_5 %}
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                                    <label class="form-check-label" for="defaultCheck1">
-                                                        {{ question.option_1 }}
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                                    <label class="form-check-label" for="defaultCheck1">
-                                                        {{ question.option_2 }}
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                                    <label class="form-check-label" for="defaultCheck1">
-                                                        {{ question.option_3 }}
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                                    <label class="form-check-label" for="defaultCheck1">
-                                                        {{ question.option_4 }}
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                                    <label class="form-check-label" for="defaultCheck1">
+                                                    <input class="form-check-input" name="option_5" type="checkbox" value="{{ question.option_5 }}" id="option_5">
+                                                    <label class="form-check-label" for="option_5">
                                                         {{ question.option_5 }}
                                                     </label>
                                                 </div>
+                                        {% endif %}
+                                        {% if question.correct_option %}
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                                    <label class="form-check-label" for="defaultCheck1">
+                                                    <input class="form-check-input" name="correct_option" type="checkbox" value="{{ question.correct_option }}" id="correct_option">
+                                                    <label class="form-check-label" for="correct_option">
                                                         {{ question.correct_option }}
                                                     </label>
                                                 </div>
+                                        {% endif %}
                                             </p>
                                         </li>
                                     {% endfor %}
                                 </ul>
                                 <div class="ml-auto text-center">
-                                    <input type="text" value="Submit" class="btn btn-primary rounded-pill">
+                                    <input type="submit" id="sub" value="Submit" onclick="getVal()" class="btn btn-primary rounded-pill">
                                 </div>
                             </form>
                         {% else %}

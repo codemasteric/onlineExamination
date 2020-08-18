@@ -12,6 +12,7 @@
     <!-- Custom -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/instructions.css' %}">
+    <link rel="stylesheet" href="{% static 'css/admin.css' %}">
     <title>Busitema | Online Examination</title>
 </head>
 
@@ -37,6 +38,36 @@
     <script src="{% static 'js/bootstrap.bundle.min.js' %} "></script>
     <script src="{% static 'js/lightbox.min.js' %} "></script>
     <script src="{% static 'js/main.js' %} "></script>
+    <script>
+        function getVal() {
+            var selected = "";
+            var checkbox_1 = document.getElementById('option_1').value;
+            var checkbox_2 = document.getElementById('option_2').value;
+            var checkbox_3 = document.getElementById('option_3').value;
+            var checkbox_4 = document.getElementById('option_4').value;
+            var checkbox_5 = document.getElementById('option_5').value;
+            var checkbox_6 = document.getElementById('correct_option').value;
+            
+            if(checkbox_1.checked){
+                selected.push(checkbox_1);
+            }
+            if(checkbox_2.checked){
+                selected.push(checkbox_2);
+            }
+            if(checkbox_3.checked){
+                selected.push(checkbox_3);
+            }
+            if(checkbox_4.checked){
+                selected.push(checkbox_4);
+            }
+            if(checkbox_5.checked){
+                selected.push(checkbox_5);
+            }
+            if(checkbox_6.checked){
+                selected.push(checkbox_6);
+            }
+        };
+    </script>
 
 </body>
 
