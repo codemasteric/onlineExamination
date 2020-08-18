@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <section id="login" class="bg-light py-5">
+        <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+            <div class="card">
+                <div class="card-header bg-light text-dark">
+                <h4>
+                    Your password has Been changed successfully, <br> 
+                    <a href="{% url 'instruction' %}">Click here to do exams</a>
+                </h4>
+                </div>
+            </div>
+            </div>
+        </div>
+        </div>
+  </section>
+{% endblock %}

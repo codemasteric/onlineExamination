@@ -35,7 +35,11 @@ def invite_participants(modeladmin, request, queryset):
     headers={'Message-ID': 'foo'},
         )
         email.content_subtype = "html"
-        email.send()
+        try:
+            email.send()
+        except SMTPServerDisconnected:
+            if not self.fail_silently:
+                continue
 
 invite_participants.short_description = "Invite filtered participants for exams"
 

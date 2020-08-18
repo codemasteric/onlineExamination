@@ -31,6 +31,12 @@
         </ul>
 
         <ul class="navbar-nav ml-auto">
+          {% if user.is_authenticated %}
+          <li class="text-white p-2">
+            <i class="fas fa-user "></i> {{ user.username }}
+          </li>
+          {% endif %}
+          
           <li 
             {% if 'change_password' in request.path %}
               class="nav-item active mr-3"
@@ -48,10 +54,13 @@
               class="nav-item  mr-3"
             {% endif %} 
           >
-            <a class="nav-link" href="{% url 'logout' %}">
+            <a class="nav-link" href="javascript:{document.getElementById('logout').submit()}">
               <i class="fas fa-sign-in-alt"></i>
-
               Logout</a>
+              <form action="{% url 'logout' %}" method="POST" id="logout">
+                {% csrf_token %}
+                <input type="hidden">
+              </form>
           </li>
         </ul>
       </div>
