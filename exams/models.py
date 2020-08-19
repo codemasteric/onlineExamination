@@ -33,16 +33,15 @@ class Answer(models.Model):
         return self.answer_text
 
 class Result(models.Model):
-    participant_id = models.ForeignKey(Participant, on_delete=models.CASCADE)
     option_1 = models.CharField(max_length=200,blank=True)
     option_2 = models.CharField(max_length=200,blank=True)
     option_3 = models.CharField(max_length=200,blank=True)
     option_4 = models.CharField(max_length=200,blank=True)
     option_5 = models.CharField(max_length=200,blank=True)
+    question_text = models.TextField(blank=True)
     correct_option = models.CharField(max_length=200,blank=True)
-    score = models.IntegerField(blank=True) 
 
     def __str__(self):
-        return self.participant_id
+        return self.option_1
 
 

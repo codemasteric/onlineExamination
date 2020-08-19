@@ -15,9 +15,12 @@
                                 <ul class="timeline">
                                     {% for question in questions %}
                                         <li class="timeline-item bg-white rounded ml-3 p-4 shadow">
+                                        {% if question.option_1 %}
                                             <div class="timeline-arrow"></div>
+                                            <input type="hidden" name="question_text" value="{{ question.question_text }}" id="question_text">
                                             <h2 class="h5 mb-0">{{ question.question_text }}</h2><span class="small text-gray"><i class="fa fa-clock-o mr-1"></i>2 mins</span>
                                             <p class="text-small mt-2 font-weight-light">
+                                        {% endif %}
                                         {% if question.option_1 %}
                                             <div class="form-check">
                                                 <input class="form-check-input" name="option_1" type="checkbox" value="{{ question.option_1 }}" id="option_1">
@@ -58,12 +61,9 @@
                                                     </label>
                                                 </div>
                                         {% endif %}
-                                        {% if question.correct_option %}
+                                        {% if question.option_5 %}
                                                 <div class="form-check">
-                                                    <input class="form-check-input" name="correct_option" type="checkbox" value="{{ question.correct_option }}" id="correct_option">
-                                                    <label class="form-check-label" for="correct_option">
-                                                        {{ question.correct_option }}
-                                                    </label>
+                                                    <input class="" name="correct_option" type="hidden" value="{{ question.correct_option }}" id="correct_option">
                                                 </div>
                                         {% endif %}
                                             </p>
@@ -71,7 +71,7 @@
                                     {% endfor %}
                                 </ul>
                                 <div class="ml-auto text-center">
-                                    <input type="submit" id="sub" value="Submit" onclick="getVal()" class="btn btn-primary rounded-pill">
+                                    <input type="submit" id="sub" value="Submit" class="btn btn-primary rounded-pill">
                                 </div>
                             </form>
                         {% else %}

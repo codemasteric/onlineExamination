@@ -21,9 +21,9 @@ class AnswerAdmin(admin.ModelAdmin):
     list_per_page = 25
 
 class ResultAdmin(admin.ModelAdmin):
-    list_display = ('id', 'participant_id', 'option_1', 'option_2', 'option_3', 'option_4', 'option_5', 'correct_option', 'score')
-    list_display_links = ('id', 'correct_option', 'score')
-    list_filter = ('correct_option', 'score')
+    list_display = ('id', 'question_text', 'option_1', 'option_2', 'option_3', 'option_4', 'option_5', 'correct_option')
+    list_display_links = ('id', 'question_text', 'correct_option')
+    list_filter = ('id', 'question_text', 'correct_option')
     list_per_page = 25
 
 admin.site.register(Instruction, InstructionAdmin)

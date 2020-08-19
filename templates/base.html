@@ -46,7 +46,11 @@
             var checkbox_3 = document.getElementById('option_3').value;
             var checkbox_4 = document.getElementById('option_4').value;
             var checkbox_5 = document.getElementById('option_5').value;
-            var checkbox_6 = document.getElementById('correct_option').value;
+            var question_text = document.getElementById('question_text').value;
+            var correct_option = document.getElementById('correct_option').value;
+
+            selected.push(question_text);
+            selected.push(correct_option);
             
             if(checkbox_1.checked){
                 selected.push(checkbox_1);
@@ -62,9 +66,6 @@
             }
             if(checkbox_5.checked){
                 selected.push(checkbox_5);
-            }
-            if(checkbox_6.checked){
-                selected.push(checkbox_6);
             }
         };
     </script>
