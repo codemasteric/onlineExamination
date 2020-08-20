@@ -3,8 +3,9 @@ from django.db.models import Max
 from django.contrib import messages
 import random
 from django.db import connection
-
+from django.core.exceptions import ObjectDoesNotExist
 from .models import Instruction, Question, Answer, Result
+from django.contrib.auth.models import User
 
 def instruction(request):
     instructions = Instruction.objects.all()
@@ -14,32 +15,35 @@ def instruction(request):
     return render(request, 'exams/instruction.html', context)
 
 def question(request):
-    max_id = Question.objects.all().aggregate(max_id=Max("id"))['max_id']
-    questions = []
-    while True:
-        pk = random.randint(1, max_id)
-        question = Question.objects.filter(pk=pk).first()
-        if question:
-            questions.append(question)
-            break
-    content = {
-        'questions': questions
-    }
-    # if request.method == 'POST':
-
-    #     option_1 = request.POST.get('option_1', " ")
-    #     option_2 = request.POST.get('option_2', " ")
-    #     option_3 = request.POST.get('option_3', " ")
-    #     option_4 = request.POST.get('option_4', " ")
-    #     option_5 = request.POST.get('option_5', " ")
-    #     question_text = request.POST.get('question_text', " ")
-    #     correct_option = request.POST.get('correct_option', " ")
-        
-    #     savedata = Result(option_1=option_1,option_2=option_2,option_3=option_3,
-    #                         option_4=option_4,option_5=option_5,question_text=question_text,correct_option=correct_option)
-        
-    #     savedata.save()
-    #     messages.success(request, 'Submision Successiful')
-    #     return redirect('question')        
-    # else:
-    return render(request, 'exams/question.html', content)
+    if request.method == 'GET':
+        max_id = Question.objects.all().aggregate(max_id=Max("id"))['max_id']
+        user_id = request.user.id
+        required = 2
+        questions = []
+        while True:
+            user_done = Answer.objects.filter(participant_id=user_id).count()
+            if user_done == required:
+                messages.success(request, 'You are Done with your Exams')
+                break
+            pk = random.randint(1, max_id)
+            question = Question.objects.filter(pk=pk).first()
+            if question:
+                try:
+                    answered = Answer.objects.get(pk=pk,participant_id=user_id)
+                except ObjectDoesNotExist:
+                    questions.append(question)
+                    break
+        content = {
+            'questions': questions
+        }
+        return render(request, 'exams/question.html', content)
+    if request.method == 'POST':
+        participant_id = request.user.id
+        print(type(participant_id))
+        question_id = request.POST['question_text']
+        answer_text = request.POST['choice']
+        answer = Answer(participant_id=participant_id, question_id=question_id, answer_text=answer_text) 
+        answer.save()
+        messages.success(request, 'Previous Answer Recorded')
+        return redirect('question')        
+    

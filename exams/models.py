@@ -24,10 +24,10 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    participant_id = models.ForeignKey(Participant, on_delete=models.CASCADE)
-    question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
+    participant_id = models.IntegerField()
+    question_id = models.IntegerField()
     answer_text = models.CharField(max_length=200, blank=True)
-    answer_value = models.IntegerField(blank=True)
+    answer_value = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.answer_text
