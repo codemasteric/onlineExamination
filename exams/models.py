@@ -44,4 +44,17 @@ class Result(models.Model):
     def __str__(self):
         return self.option_1
 
+class Monitor(models.Model):
+    participant_id = models.IntegerField(null=True, blank=True)
+    questions_numbers = models.IntegerField(null=True, blank=True, default=0)
+    start_time = models.TimeField(auto_now=False, null=True, blank=True)
+    exams_ended = models.BooleanField(default=False, null=True, blank=True)
+
+class Settings(models.Model):
+    maximum_quiz_numbers = models.IntegerField(null=True, blank=True, default=1)
+    exam_hours = models.IntegerField(null=True, blank=True)
+    exam_deadline = models.DateField(auto_now=False, null=True, blank=True)
+    name = models.CharField(max_length=20, default='main')
+
+
 
