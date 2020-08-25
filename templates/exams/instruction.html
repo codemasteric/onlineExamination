@@ -1,6 +1,40 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>instruction page</h1>
-    {% include 'partials/_alerts.html' %}
+<div class="container-fluid">
+    <!-- The Instructions section -->
+    <section class="py-5">
+        <div class="">
+            <div class="row">
+                <div class="col-lg-7 mx-auto">
+                    
+                    <!-- Timeline -->
+                    {% if instructions %}
+                        <ul class="timeline">
+                    
+                        {% for instruction in instructions %}
+                            <li class="timeline-item bg-white rounded ml-3 p-4 shadow">
+                                <div class="timeline-arrow"></div>
+                                <h2 class="h5 mb-0">{{ instruction.title }}</h2><span class="small text-gray"><i class="fa fa-clock-o mr-1"></i>21 March, 2019</span>
+                                <p class="text-small mt-2 font-weight-light"> 
+                                    {{ instruction.content }}
+                                </p> 
+                            </li>  
+                        {% endfor %}
+                        </ul><!-- End -->
+                        <div class="ml-auto text-center">
+                            <a href="{% url 'question' %}" type="button" class="btn btn-primary rounded-pill">
+                                <b>Start Exam</b>
+                            </a>
+                        </div>
+                    {% else %}
+                        <div class="col-md-12 text-center">
+                            <p>No Instructions Available</p>
+                        </div>
+                    {% endif %} 
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
 {% endblock %}

@@ -4,12 +4,17 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from .tokens import account_activation_token
 from django.contrib import messages
+<<<<<<< HEAD
 from django.contrib import auth
+=======
+from django.contrib.auth import login, authenticate
+>>>>>>> opiko
 from django.contrib.auth.models import User
 from . models import Participant
 
 def login(request):
     if request.method == 'POST':
+<<<<<<< HEAD
         username = request.POST['username']
         password = request.POST['password']
 
@@ -21,10 +26,15 @@ def login(request):
         else:
             messages.error(request, "Invalid Credentials")
             return redirect('login')
+=======
+        messages.error(request, 'Testing error messages')
+        return redirect('change_password')
+>>>>>>> opiko
     else:
         return render(request, 'participants/login.html')
 
 def logout(request):
+<<<<<<< HEAD
     if request.method == 'POST':
         auth.logout(request)
         messages.success(request, "You are now logged out")
@@ -56,17 +66,34 @@ def change_password(request):
 
     # else:
     #     return redirect('login')
+=======
+    return render(request, 'participants/logout.html')
+
+def change_password(request):
+    if request.method == 'POST':
+        messages.error(request, 'Testing error messages')
+        return redirect('change_password')
+    else:
+        return render(request, 'participants/change_password.html')
+>>>>>>> opiko
 
 def activate(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
+<<<<<<< HEAD
         real_user = User.objects.get(pk=uid)
         user = Participant.objects.get(user=real_user)
         # print(user)
+=======
+        user = User.objects.get(pk=uid)
+        user = Participant.objects.get(user=user)
+        print(user)
+>>>>>>> opiko
         # user_check = Participant.objects.filter(user=user.username)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
     if user is not None and account_activation_token.check_token(user, token):
+<<<<<<< HEAD
         # participant = Participant.objects.filter(user=user.username)
         # user.is_active = True
         # auth.login(request, real_user)
@@ -74,6 +101,13 @@ def activate(request, uidb64, token):
             "user": real_user
         }
         return render(request, 'participants/change_password.html', context)
+=======
+        user.is_active = True
+        # Participant.objects.filter(years_ago__gt=5)
+        # user.save()
+        # login(request, user)
+        return redirect('instruction')
+>>>>>>> opiko
         # return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
     else:
         return HttpResponse('Activation link is invalid!')

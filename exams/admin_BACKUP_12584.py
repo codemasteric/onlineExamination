@@ -1,4 +1,8 @@
 from django.contrib import admin
+<<<<<<< HEAD
+
+# Register your models here.
+=======
 from django.contrib.auth.models import User
 from .models import Instruction, Question, Answer, Result, Monitor, Settings
 from django.contrib import messages
@@ -69,3 +73,4 @@ admin.site.register(Answer, AnswerAdmin)
 admin.site.register(Result, ResultAdmin)
 admin.site.register(Monitor, MonitorAdmin)
 admin.site.register(Settings, SettingsAdmin)
+>>>>>>> opiko

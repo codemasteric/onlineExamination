@@ -1,8 +1,12 @@
+<<<<<<< HEAD
 import csv, io, re
 from django.contrib import messages
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django import forms
+=======
+from django.contrib import admin
+>>>>>>> opiko
 from participants.models import Participant
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
@@ -10,15 +14,22 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
+<<<<<<< HEAD
 from django.core import mail
 from django.core.mail import send_mail
 from django.urls import path
 from django.shortcuts import render, redirect
+=======
+from django.core.mail import send_mail
+>>>>>>> opiko
 
 
 
 def invite_participants(modeladmin, request, queryset):
+<<<<<<< HEAD
     messages = []
+=======
+>>>>>>> opiko
     for user in queryset:
         # user = user.user
         # print(user.user.pk)
@@ -37,6 +48,7 @@ def invite_participants(modeladmin, request, queryset):
     headers={'Message-ID': 'foo'},
         )
         email.content_subtype = "html"
+<<<<<<< HEAD
         messages.append(email)
     connection = mail.get_connection(fail_silently=True)
     print(messages)
@@ -103,4 +115,13 @@ class ParticipantAdmin(admin.ModelAdmin):
             request, "admin/csv_form.html", payload
         )
 
+=======
+        email.send()
+
+invite_participants.short_description = "Invite filtered participants for exams"
+
+class ParticipantAdmin(admin.ModelAdmin):
+    actions = [invite_participants]
+
+>>>>>>> opiko
 admin.site.register(Participant, ParticipantAdmin)

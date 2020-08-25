@@ -1,5 +1,81 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Question</h1>
+     <!-- The Instructions section -->
+     <section class="pb-5" id="page">
+         <!-- Alerts -->
+            <div class="">
+                <div class="row">
+                    <div class="col-lg-7 mx-auto">
+                        {% include 'partials/_alerts.html' %} 
+                        <!-- Timeline -->
+                        {% if questions %}
+                            <form action="{% url 'question' %}" method="POST">
+                            {% csrf_token %}
+                                <ul class="timeline">
+                                    {% for question in questions %}
+                                        <li class="timeline-item bg-white rounded ml-3 p-4 shadow">
+                                            <div class="timeline-arrow"></div>
+                                            <input type="hidden" name="question_text" value="{{ question.id }}" id="question_text">
+                                            <h2 class="h5 mb-0">{{ question.question_text }}</h2><span class="small text-gray"><i class="fa fa-clock-o mr-1"></i>2 mins</span>
+                                            <p class="text-small mt-2 font-weight-light">
+                                        {% if question.option_1 %}
+                                            <div class="form-check">
+                                                <input class="form-check-input" name="choice" type="radio" value="{{ question.option_1 }}" id="option_1" checked>
+                                                <label class="form-check-label" for="option_1">
+                                                    {{ question.option_1 }}
+                                                </label>
+                                            </div>
+                                        {% endif %}
+                                        {% if question.option_2 %}
+                                            <div class="form-check">
+                                                <input class="form-check-input" name="choice" type="radio" value="{{ question.option_2 }}" id="option_2">
+                                                <label class="form-check-label" for="option_2">
+                                                    {{ question.option_2 }}
+                                                </label>
+                                            </div>
+                                        {% endif %}
+                                        {% if question.option_3 %}
+                                            <div class="form-check">
+                                                <input class="form-check-input" name="choice" type="radio" value="{{ question.option_3 }}" id="option_3">
+                                                <label class="form-check-label" for="option_3">
+                                                    {{ question.option_3 }}
+                                                </label>
+                                            </div>
+                                        {% endif %}
+                                        {% if question.option_4 %}
+                                            <div class="form-check">
+                                                <input class="form-check-input" name="choice" type="radio" value="{{ question.option_4 }}" id="option_4">
+                                                <label class="form-check-label" for="option_4">
+                                                    {{ question.option_4 }}
+                                                </label>
+                                            </div>
+                                        {% endif %}
+                                        {% if question.option_5 %}
+                                                <div class="form-check">
+                                                    <input class="form-check-input" name="choice" type="radio" value="{{ question.option_5 }}" id="option_5">
+                                                    <label class="form-check-label" for="option_5">
+                                                        {{ question.option_5 }}
+                                                    </label>
+                                                </div>
+                                        {% endif %}
+                                        
+                                            </p>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="ml-auto text-center">
+                                    <input type="submit" id="sub" value="Submit" class="btn btn-primary rounded-pill">
+                                </div>
+                            </form>
+                        {% else %}
+                            <div class="col-md-12 text-center">
+                                <p>No Questions Available</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
 {% endblock %}
