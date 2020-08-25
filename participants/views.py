@@ -31,9 +31,11 @@ def logout(request):
         return redirect('login')
 
 def change_password(request):
-    if request.user.is_authenticated:
+    # if request.user.is_authenticated:
         if request.method == 'POST':
-            username = request.user.username
+            username = request.POST['user']
+            print(username)
+            # username = user.username
             password = request.POST['password']
             password2 = request.POST['password2']
             #check if password match
@@ -41,7 +43,10 @@ def change_password(request):
                 user =  User.objects.get(username=username)
                 user.set_password(password2)
                 # messages.success(request, 'Your password has been changed successfully')
+                
+                user.is_active = True
                 user.save()
+                auth.login(request, user)
                 return render(request, 'participants/update_success.html')
             else:
                 messages.error(request, 'Passwords donot match')
@@ -49,23 +54,26 @@ def change_password(request):
         else:
             return render(request, 'participants/change_password.html')
 
-    else:
-        return redirect('login')
+    # else:
+    #     return redirect('login')
 
 def activate(request, uidb64, token):
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         real_user = User.objects.get(pk=uid)
         user = Participant.objects.get(user=real_user)
-        print(user)
+        # print(user)
         # user_check = Participant.objects.filter(user=user.username)
     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
     if user is not None and account_activation_token.check_token(user, token):
         # participant = Participant.objects.filter(user=user.username)
-        user.is_active = True
-        auth.login(request, real_user)
-        return redirect('change_password')
+        # user.is_active = True
+        # auth.login(request, real_user)
+        context = {
+            "user": real_user
+        }
+        return render(request, 'participants/change_password.html', context)
         # return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
     else:
         return HttpResponse('Activation link is invalid!')

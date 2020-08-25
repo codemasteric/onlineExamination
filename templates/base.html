@@ -23,6 +23,10 @@
         {% include 'partials/_navbar_login.html' %}
     {% elif '/logout' in request.path %}
         {% include 'partials/_navbar_logout.html' %}
+    {% elif '/change_password' in request.path %}
+        {% include 'partials/_navbar_change_password.html' %}
+    {% elif '/activate' in request.path %}
+        {% include 'partials/_navbar_change_password.html' %}
     {% else %}
         {% include 'partials/_navbar.html' %}
     {% endif %}

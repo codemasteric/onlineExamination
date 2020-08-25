@@ -10,6 +10,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
+from django.core import mail
 from django.core.mail import send_mail
 from django.urls import path
 from django.shortcuts import render, redirect
@@ -17,6 +18,7 @@ from django.shortcuts import render, redirect
 
 
 def invite_participants(modeladmin, request, queryset):
+    messages = []
     for user in queryset:
         # user = user.user
         # print(user.user.pk)
@@ -35,11 +37,12 @@ def invite_participants(modeladmin, request, queryset):
     headers={'Message-ID': 'foo'},
         )
         email.content_subtype = "html"
-        try:
-            email.send()
-        except SMTPServerDisconnected:
-            if not self.fail_silently:
-                continue
+        messages.append(email)
+    connection = mail.get_connection(fail_silently=True)
+    print(messages)
+    connection.open()
+    connection.send_messages(messages)
+    # email.send(fail_silently=True)
 
 invite_participants.short_description = "Invite filtered participants for exams"
 

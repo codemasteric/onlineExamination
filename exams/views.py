@@ -1,8 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 def instruction(request):
-    return render(request, 'exams/instruction.html')
+    if request.user.is_authenticated:
+        return render(request, 'exams/instruction.html')
+    else:
+        return redirect('login')
 
 def question(request):
-    return render(request, 'exams/question.html')
+    if request.user.is_authenticated:
+        return render(request, 'exams/question.html')
+    else:
+        return redirect('login')
+    
 
