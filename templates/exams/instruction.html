@@ -7,7 +7,7 @@
         <div class="">
             <div class="row">
                 <div class="col-lg-7 mx-auto">
-                    
+                    <h1 class=" mb-0">INSTRUCTIONS</h1>
                     <!-- Timeline -->
                     {% if instructions %}
                         <ul class="timeline">
@@ -15,8 +15,8 @@
                         {% for instruction in instructions %}
                             <li class="timeline-item bg-white rounded ml-3 p-4 shadow">
                                 <div class="timeline-arrow"></div>
-                                <h2 class="h5 mb-0">{{ instruction.title }}</h2><span class="small text-gray"><i class="fa fa-clock-o mr-1"></i>21 March, 2019</span>
-                                <p class="text-small mt-2 font-weight-light"> 
+                                <h3 class=" mb-0">{{ instruction.title }}</h3>
+                                <p class=" mt-3 "> 
                                     {{ instruction.content }}
                                 </p> 
                             </li>  

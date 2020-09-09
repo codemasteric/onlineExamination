@@ -31,7 +31,7 @@ def logout(request):
         return redirect('login')
 
 def change_password(request):
-    # if request.user.is_authenticated:
+    if request.user.is_authenticated:
         if request.method == 'POST':
             username = request.POST['user']
             print(username)
@@ -54,8 +54,8 @@ def change_password(request):
         else:
             return render(request, 'participants/change_password.html')
 
-    # else:
-    #     return redirect('login')
+    else:
+        return redirect('login')
 
 def activate(request, uidb64, token):
     try:
@@ -69,7 +69,7 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         # participant = Participant.objects.filter(user=user.username)
         # user.is_active = True
-        # auth.login(request, real_user)
+        auth.login(request, real_user)
         context = {
             "user": real_user
         }

@@ -18,8 +18,10 @@ def create_user_profile(sender, instance, created, **kwargs):
         Participant.objects.create(user=instance, email=instance.email)
 
 @receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    participant = Participant.objects.get(user=instance.pk)
-    participant.email = instance.email
-    participant.save()
-    # pass
+def save_user_profile(sender, instance,created, **kwargs):
+    try:
+        participant = Participant.objects.get(user=instance.pk)
+        participant.email = instance.email
+        participant.save()
+    except(Participant.DoesNotExist):
+        pass

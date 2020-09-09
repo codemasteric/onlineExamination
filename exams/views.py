@@ -9,9 +9,9 @@ from .models import Instruction, Question, Answer, Result, Monitor, Settings
 from django.contrib.auth.models import User
 
 
-def deadline_passed(exam_deadline):
+def deadline_not_passed(exam_deadline):
     present = datetime.date(datetime.now())
-    return present < exam_deadline
+    return present <= exam_deadline
 
 def is_time_between(start_time, end_time, check_time=None):
     start_time = start_time.time()
@@ -32,11 +32,14 @@ def generate_exam_endtime(start_time, exam_hours):
 
 
 def instruction(request):
-    instructions = Instruction.objects.all()
-    context = {
-        'instructions': instructions
-    }
-    return render(request, 'exams/instruction.html', context)
+    if request.user.is_authenticated:
+        instructions = Instruction.objects.all()
+        context = {
+            'instructions': instructions
+        }
+        return render(request, 'exams/instruction.html', context)
+    else:
+        return redirect('login')
 
 def question(request):
     if request.user.is_authenticated:
@@ -56,7 +59,7 @@ def question(request):
             
             #check if it is  deadline
             exam_deadline = Settings.objects.get(name="main").exam_deadline
-            if not deadline_passed(exam_deadline):  
+            if  deadline_not_passed(exam_deadline):  
                 # check if it is time already
                 if is_time_between(start_time, end_time, check_time=None):
 
@@ -74,7 +77,7 @@ def question(request):
                             question = Question.objects.filter(pk=pk).first()
                             if question:
                                 if done <= max_no:
-                                    if Answer.objects.filter(question_id=pk).exists():
+                                    if Answer.objects.filter(question_id=pk,participant_id=user_id).exists():
                                         continue                       
                                     questions.append(question) 
                                     break
@@ -91,6 +94,10 @@ def question(request):
                         }
                         return render(request, 'exams/question.html', content)
                     else:
+                        exams_ended = True
+                        user_record = Monitor.objects.get(participant_id=user_id)
+                        user_record.exams_ended = exams_ended
+                        user_record.save()
                         return render(request, 'exams/done.html')
                 else:
                     return render(request, 'exams/timeout.html')

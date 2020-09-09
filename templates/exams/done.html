@@ -1,1 +1,31 @@
-<h1>You are done with your paper</h1>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- The Instructions section -->
+    <section class="py-5">
+        <div class="">
+            <div class="row">
+                <div class="col-lg-7 mx-auto">
+                    
+                    <!-- Display Exams done information -->
+                        <ul class="timeline">    
+                            <li class="timeline-item bg-white rounded ml-3 p-4 shadow">
+                                <div class="timeline-arrow"></div>
+                                <h1 class="mb-0">Examination Done</h1>
+                                <p class="mt-3 "> 
+                                    Congratulations!!, You have successfully finished the examination.
+                                </p> 
+                            </li>  
+                        </ul><!-- End -->
+                        <div class="ml-auto text-center">
+                            <a href="{% url 'instruction' %}" type="button" class="btn btn-primary rounded-pill">
+                                <b>Leave Page</b>
+                            </a>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
