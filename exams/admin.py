@@ -2,6 +2,42 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from .models import Instruction, Question, Answer, Result, Monitor, Settings
 from django.contrib import messages
+import csv
+from django.http import HttpResponse
+
+#export to csv file in admin
+def export_as_csv_action(description="Export selected objects as CSV file",
+                         fields=None, exclude=None, header=True):
+    """
+    This function returns an export csv action
+    'fields' and 'exclude' work like in django ModelForm
+    'header' is whether or not to output the column names as the first row
+    """
+    def export_as_csv(modeladmin, request, queryset):
+        """
+        Generic csv export admin action.
+        based on http://djangosnippets.org/snippets/1697/
+        """
+        opts = modeladmin.model._meta
+        field_names = set([field.name for field in opts.fields])
+        if fields:
+            fieldset = set(fields)
+            field_names = field_names & fieldset
+        elif exclude:
+            excludeset = set(exclude)
+            field_names = field_names - excludeset
+        
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename=%s.csv' % str(opts).replace('.', '_')
+        
+        writer = csv.writer(response)
+        if header:
+            writer.writerow(field_names)
+        for obj in queryset:
+            writer.writerow([getattr(obj, field) for field in field_names])
+        return response
+    export_as_csv.short_description = description
+    return export_as_csv
 
 
 def mark_answers(modeladmin, request, queryset):
@@ -51,6 +87,8 @@ class ResultAdmin(admin.ModelAdmin):
     list_display_links = ('username',)
     list_filter = ('username', 'email', 'marks', 'percentage')
     list_per_page = 25
+
+    actions = [export_as_csv_action("Export selected objects as CSV file", fields=['username', 'email','marks','percentage'], header=True),]
 
 class MonitorAdmin(admin.ModelAdmin):
     list_display = ('participant_id', 'questions_numbers', 'start_time', 'exams_ended' )

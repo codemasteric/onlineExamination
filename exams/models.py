@@ -53,6 +53,7 @@ class Settings(models.Model):
     exam_hours = models.DecimalField(max_digits=2, decimal_places=1, null=True)
     exam_deadline = models.DateField(auto_now=False, null=True, blank=True)
     name = models.CharField(max_length=20, default='main')
+    begin = models.BooleanField(default=False)
 
 
 

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- The Instructions section -->
+    <section class="py-5">
+        <div class="">
+            <div class="row">
+                <div class="col-lg-7 mx-auto">
+                    
+                    <!-- Display Not time for exams yet information -->
+                        <ul class="timeline">    
+                            <li class="timeline-item bg-white rounded ml-3 p-4 shadow">
+                                <div class="timeline-arrow"></div>
+                                <h1 class=" mb-0">Examination is Coming Soon,</h1>
+                                <p class=" mt-3 "> 
+                                    Not Yet Time For Examination,
+                                </p> 
+                            </li>  
+                        </ul><!-- End -->
+                        <div class="ml-auto text-center">
+                            <a href="{% url 'instruction' %}" type="button" class="btn btn-primary rounded-pill">
+                                <b>Leave Page</b>
+                            </a>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
