@@ -2,8 +2,13 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from .models import Instruction, Question, Answer, Result, Monitor, Settings
 from django.contrib import messages
+from django.urls import path
+from django.shortcuts import render, redirect
 import csv
 from django.http import HttpResponse
+
+
+
 
 #export to csv file in admin
 def export_as_csv_action(description="Export selected objects as CSV file",
@@ -63,6 +68,9 @@ mark_answers.short_description = "Generate Results for this exams"
 
 
 
+
+
+
 class InstructionAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'content')
     list_display_links = ('id', 'title')
@@ -73,13 +81,15 @@ class QuestionAdmin(admin.ModelAdmin):
     list_display = ('id', 'question_text', 'correct_option')
     list_display_links = ('id', 'question_text')
     list_filter = ('question_text', 'correct_option')
+    search_fields = ['id']
     list_per_page = 25
 
 class AnswerAdmin(admin.ModelAdmin):
     actions = [mark_answers]
-    list_display = ('id', 'participant_id', 'question_id', 'answer_text', 'answer_value')
-    list_display_links = ('id', 'participant_id', 'answer_text', 'answer_value')
-    list_filter = ('answer_text', 'answer_value', 'participant_id')
+    list_display = ('id', 'participant_id', 'question_id', 'answer_text', 'answer_value','question_text')
+    list_display_links = ('id', 'participant_id','question_id', 'question_text')
+    list_filter = ('answer_value', 'participant_id')
+    search_fields = ['participant_id']
     list_per_page = 25
 
 class ResultAdmin(admin.ModelAdmin):
@@ -87,13 +97,52 @@ class ResultAdmin(admin.ModelAdmin):
     list_display_links = ('username',)
     list_filter = ('username', 'email', 'marks', 'percentage')
     list_per_page = 25
+    search_fields = ['username', 'email', 'marks', 'percentage']
+    
 
-    actions = [export_as_csv_action("Export selected objects as CSV file", fields=['username', 'email','marks','percentage'], header=True),]
+    def get_urls(self):
+        urls = super().get_urls()
+        my_urls = [
+            path('view-detail/', self.show_result),
+        ]
+        return my_urls + urls
+    # def retrieve_result(self, request, queryset):
+    #     self.show_result
+    def show_result(modeladmin, request, queryset):
+        data = []
+        for user in queryset:
+            participant_id = User.objects.get(username=user.username).id
+            answers = Answer.objects.filter(participant_id=participant_id)
+            quiz_answer_dict = {}
+            for answer in answers:
+                key = Question.objects.get(pk=answer.question_id).question_text
+                # print(key)
+                quiz_dict = quiz_answer_dict[key] = {}
+                
+                question = Question.objects.get(id=answer.question_id)
+                quiz_dict["option_1"] = question.option_1
+                quiz_dict["option_2"] = question.option_2
+                quiz_dict["option_3"] = question.option_3
+                quiz_dict["option_4"] = question.option_4
+                quiz_dict["option_5"] = question.option_5
+                quiz_dict["correct_option"] = question.correct_option
+                quiz_dict["checked_option"] = answer.answer_text
+                data.append(quiz_answer_dict)
+            # print(quiz_answer_dict)
+            
 
+            print(data)
+        
+        payload = {"data": data}
+        return render(
+            request, "admin/results.html", payload
+        )
+    actions = [show_result]
 class MonitorAdmin(admin.ModelAdmin):
     list_display = ('participant_id', 'questions_numbers', 'start_time', 'exams_ended' )
     list_display_links = ('participant_id',)
     list_filter = ('participant_id', 'questions_numbers', 'start_time', 'exams_ended')
+    search_fields = ['participant_id']
     list_per_page = 25
 
 class SettingsAdmin(admin.ModelAdmin):

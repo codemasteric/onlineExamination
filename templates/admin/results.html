@@ -1,0 +1,43 @@
+{% extends 'admin/results_admin.html' %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- The Instructions section -->
+    <section class="py-2">
+        <div class="">
+            <div class="row">
+                <div class="col-lg-7 mx-auto">
+                    <h1 class="text-center mb-0">RESULT DOCUMENT</h1>
+                    <hr>
+                    <!-- heading section -->
+                        <div class="text-center bg-white rounded ml-3 shadow">
+                            <div class=""></div>
+                            <h5 class=" mb-0">NAME: ONGOM WINNIE</h5>
+                            <h5 class=" mb-0">PARTICIPANT ID: 319</h5>
+                            <h5 class=" mb-0">MARKS SCORED: 33</h5>
+                            <h5 class=" mb-0">PERCENTAGE(100%): 55</h5>
+                        </div>  
+                </div>
+                <div class="col-lg-7 mx-auto mt-2">
+                    <h1 class="text-center mb-0">ATTEMPTED QUESTIONS WITH THEIR ANSWERS</h1>
+                    <hr>
+                    {% for value in data %}
+                        {% for key, val in value.items %}
+                        
+                            <p>{{ key }}</p>
+                            {% if val.option_1 == value.question_text.correct_option %}
+                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
+                            {% endif %}
+                            <input class="form-check-input" name="choice" type="radio" {% if value.question_text.option_1 == value.question_text.checked_option %} checked {% endif %}>
+                            <label class="form-check-label" for="option_1">
+                                {{ value.question_text.option_1 }}
+                            </label>
+                        {% endfor %}
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

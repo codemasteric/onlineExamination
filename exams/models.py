@@ -31,6 +31,8 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.answer_text
+    def question_text(self):
+        return Question.objects.get(id=self.question_id)
 
 class Result(models.Model):
     username = models.CharField(max_length=200,blank=True)

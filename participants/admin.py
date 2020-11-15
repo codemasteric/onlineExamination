@@ -91,6 +91,8 @@ class ParticipantAdmin(admin.ModelAdmin):
     actions = [invite_participants,export_as_csv_action("Export selected objects as CSV file", fields=['user', 'email'], header=True)]
 
     change_list_template = "participants/participants_changelist.html"
+    list_display = ('user', 'email','user_id')
+    search_fields = ['email']
 
     def get_urls(self):
         urls = super().get_urls()
