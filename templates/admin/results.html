@@ -7,32 +7,205 @@
         <div class="">
             <div class="row">
                 <div class="col-lg-7 mx-auto">
-                    <h1 class="text-center mb-0">RESULT DOCUMENT</h1>
+                    <h1 class="text-center mb-0" style="font-weight:400">RESULT DOCUMENT</h1>
                     <hr>
                     <!-- heading section -->
                         <div class="text-center bg-white rounded ml-3 shadow">
                             <div class=""></div>
-                            <h5 class=" mb-0">NAME: ONGOM WINNIE</h5>
-                            <h5 class=" mb-0">PARTICIPANT ID: 319</h5>
-                            <h5 class=" mb-0">MARKS SCORED: 33</h5>
-                            <h5 class=" mb-0">PERCENTAGE(100%): 55</h5>
+                            
+                            <h5 class=" mb-0" style="font-weight:400">NAME: {{ info.name }}</h5>
+                            <h5 class=" mb-0" style="font-weight:400">PARTICIPANT ID: {{ info.participant_id }}</h5>
+                            <h5 class=" mb-0" style="font-weight:400">MARKS SCORED: {{ info.marks }}</h5>
+                            <h5 class=" mb-0"style="font-weight:400">PERCENTAGE(100%): {{ info.percent }}</h5>
+                            <h5 class=" mb-0"style="font-weight:400">TOTAL NUMBER OF ATTEMPED QUESTIONS: {{ info.total }}</h5>
+                            
                         </div>  
                 </div>
-                <div class="col-lg-7 mx-auto mt-2">
-                    <h1 class="text-center mb-0">ATTEMPTED QUESTIONS WITH THEIR ANSWERS</h1>
+                <div class="col-md-8 mx-auto mt-2">
+                    <h1 class="text-center mb-0" style="font-weight:400">ATTEMPTED QUESTIONS WITH THEIR ANSWERS</h1>
                     <hr>
                     {% for value in data %}
                         {% for key, val in value.items %}
                         
-                            <p>{{ key }}</p>
-                            {% if val.option_1 == value.question_text.correct_option %}
-                            <i class="fa fa-thumbs-up" aria-hidden="true"></i>
-                            {% endif %}
-                            <input class="form-check-input" name="choice" type="radio" {% if value.question_text.option_1 == value.question_text.checked_option %} checked {% endif %}>
-                            <label class="form-check-label" for="option_1">
-                                {{ value.question_text.option_1 }}
-                            </label>
+                        <form action="">
+                            <p style="font-size: 23px;font-weight:400"><span><strong>[Quiz]  </strong></span>{{ key }}</p>
+                            
+                            <div class="ml-5">
+                                {% if val.option_1 %}
+                                    <div>
+                                    <!-- option one -->
+                                    {% if val.option_1 == val.checked_option %}
+                                        {% if val.option_1 == val.correct_option %}
+                                            <label  for="option_1">
+                                                <input  name="choice" type="radio" disabled checked >
+                                                {{ val.option_1 }}
+                                            </label>
+                                            <i class="fa fa-user-md" aria-hidden="true"></i>
+                                            <i class="fa fa-check fa-2x" style="color: green;" aria-hidden="true"></i>
+                                            
+                                        {% endif %}
+                                        {% if val.option_1 != val.correct_option %}
+                                            <label  for="option_1">
+                                                <input  name="choice" type="radio" disabled checked >
+                                                {{ val.option_1 }}
+                                            </label>
+                                            <i class="fa fa-user-md" aria-hidden="true"></i>
+                                            <i class="fa fa-times fa-2x" style="color: red;" aria-hidden="true"></i>
+                                        {% endif %}
+                                    {% else %}
+                                        <label  for="option_1">
+                                            <input  name="choice" type="radio" disabled >
+                                            {{ val.option_1 }}
+                                        </label>
+                                    {% endif %}
+
+                                    {% if val.option_1 == val.correct_option %}
+                                        &nbsp;&nbsp;<span style="color: green;">Correct!!!</span>
+                                    {% endif %}
+                                    <!-- <br> -->
+                                    </div>
+                                {% endif %}
+
+                                <!-- =========== -->
+                                {% if val.option_2 %}
+                                    <div>
+                                    <!-- option two -->
+                                    {% if val.option_2 == val.checked_option %}
+                                        {% if val.option_2 == val.correct_option %}
+                                            <label  for="option_2">
+                                                <input  name="choice" type="radio" disabled checked >
+                                                {{ val.option_2 }}
+                                            </label>
+                                            <i class="fa fa-user-md" aria-hidden="true"></i>
+                                            <i class="fa fa-check fa-2x" style="color: green;" aria-hidden="true"></i>
+                                        {% endif %}
+                                        {% if val.option_2 != val.correct_option %}
+                                            <label  for="option_2">
+                                                <input  name="choice" type="radio" disabled checked >
+                                                {{ val.option_2 }}
+                                            </label>
+                                            <i class="fa fa-user-md" aria-hidden="true"></i>
+                                            <i class="fa fa-times fa-2x" style="color: red;" aria-hidden="true"></i>
+                                        {% endif %}
+                                    {% else %}
+                                        <label  for="option_2">
+                                            <input  name="choice" type="radio" disabled >
+                                            {{ val.option_2 }}
+                                        </label>
+                                    {% endif %}
+
+                                    {% if val.option_2 == val.correct_option %}
+                                        &nbsp;&nbsp;<span style="color: green;">Correct!!!</span>
+                                    {% endif %}
+                                    </div>
+                                {% endif %}
+
+                                <!-- =========== -->
+                                {% if val.option_3 %}
+                                    <div>
+                                    <!-- option three -->
+                                    {% if val.option_3 == val.checked_option %}
+                                        {% if val.option_3 == val.correct_option %}
+                                            <label  for="option_3">
+                                                <input  name="choice" type="radio" disabled checked >
+                                                {{ val.option_3 }}
+                                            </label>
+                                            <i class="fa fa-user-md" aria-hidden="true"></i>
+                                            <i class="fa fa-check fa-2x" style="color: green;" aria-hidden="true"></i>
+                                        {% endif %}
+                                        {% if val.option_3 != val.correct_option %}
+                                            <label  for="option_3">
+                                                <input  name="choice" type="radio" disabled checked >
+                                                {{ val.option_3 }}
+                                            </label>
+                                            <i class="fa fa-user-md" aria-hidden="true"></i>
+                                            <i class="fa fa-times fa-2x" style="color: red;" aria-hidden="true"></i>
+                                        {% endif %}
+                                    {% else %}
+                                        <label  for="option_3">
+                                            <input  name="choice" type="radio" disabled >
+                                            {{ val.option_3 }}
+                                        </label>
+                                    {% endif %}
+
+                                    {% if val.option_3 == val.correct_option %}
+                                        &nbsp;&nbsp;<span style="color: green;">Correct!!!</span>
+                                    {% endif %}
+                                    </div>
+                                {% endif %}
+
+                                <!-- =========== -->
+                                {% if val.option_4 %}
+                                    <div>
+                                    <!-- option four -->
+                                    {% if val.option_4 == val.checked_option %}
+                                        {% if val.option_4 == val.correct_option %}
+                                            <label  for="option_4">
+                                                <input  name="choice" type="radio" disabled checked >
+                                                {{ val.option_4 }}
+                                            </label>
+                                            <i class="fa fa-user-md" aria-hidden="true"></i>
+                                            <i class="fa fa-check fa-2x" style="color: green;" aria-hidden="true"></i>
+                                        {% endif %}
+                                        {% if val.option_4 != val.correct_option %}
+                                            <label  for="option_4">
+                                                <input  name="choice" type="radio" disabled checked >
+                                                {{ val.option_4 }}
+                                            </label>
+                                            <i class="fa fa-user-md" aria-hidden="true"></i>
+                                            <i class="fa fa-times fa-2x" style="color: red;" aria-hidden="true"></i>
+                                        {% endif %}
+                                    {% else %}
+                                        <label  for="option_4">
+                                            <input  name="choice" type="radio" disabled >
+                                            {{ val.option_4 }}
+                                        </label>
+                                    {% endif %}
+
+                                    {% if val.option_4 == val.correct_option %}
+                                        &nbsp;&nbsp;<span style="color: green;">Correct!!!</span>
+                                    {% endif %}
+                                    </div>
+                                {% endif %}
+
+                                <!-- =========== -->
+                                {% if val.option_5 %}
+                                    <div>
+                                    <!-- option five -->
+                                    {% if val.option_5 == val.checked_option %}
+                                        {% if val.option_5 == val.correct_option %}
+                                            <label  for="option_5">
+                                                <input  name="choice" type="radio" disabled checked >
+                                                {{ val.option_5 }}
+                                            </label>
+                                            <i class="fa fa-user-md" aria-hidden="true"></i>
+                                            <i class="fa fa-check fa-2x" style="color: green;" aria-hidden="true"></i>
+                                        {% endif %}
+                                        {% if val.option_5 != val.correct_option %}
+                                            <label  for="option_5">
+                                                <input  name="choice" type="radio" disabled checked >
+                                                {{ val.option_5 }}
+                                            </label>
+                                            <i class="fa fa-user-md" aria-hidden="true"></i>
+                                            <i class="fa fa-times fa-2x" style="color: red;" aria-hidden="true"></i>
+                                        {% endif %}
+                                    {% else %}
+                                        <label  for="option_5">
+                                            <input  name="choice" type="radio" disabled >
+                                            {{ val.option_5 }}
+                                        </label>
+                                    {% endif %}
+
+                                    {% if val.option_5 == val.correct_option %}
+                                        &nbsp;&nbsp;<span style="color: green;">Correct!!!</span>
+                                    {% endif %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </form> 
+        
                         {% endfor %}
+                        
                     {% endfor %}
 
                 </div>

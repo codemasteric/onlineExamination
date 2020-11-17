@@ -109,12 +109,32 @@ class ResultAdmin(admin.ModelAdmin):
     # def retrieve_result(self, request, queryset):
     #     self.show_result
     def show_result(modeladmin, request, queryset):
+        if queryset.count() != 1:
+            modeladmin.message_user(request, "Cannot select more than one result/user at a time.")
+            return
         data = []
+        info = {}
         for user in queryset:
-            participant_id = User.objects.get(username=user.username).id
-            answers = Answer.objects.filter(participant_id=participant_id)
-            quiz_answer_dict = {}
+            participant_id = User.objects.get(username=user.username).id #obtaining the user id
+            answers = Answer.objects.filter(participant_id=participant_id) #retrieving all answers for this user
+
+            #information for results display
+            firstname = User.objects.get(username=user.username).first_name
+            lastname = User.objects.get(username=user.username).last_name
+            name = firstname + " " + lastname
+            marks_scored = Result.objects.get(username=user.username).marks
+            percentage = Result.objects.get(username=user.username).percentage
+            total_quiz_number = Monitor.objects.get(participant_id=participant_id).questions_numbers
+            
+            info['name'] = name
+            info['marks'] = marks_scored
+            info['percent'] = percentage
+            info['total'] = total_quiz_number
+            info['participant_id'] = participant_id
+            
+            #retrieve all questions and answers and options for the user
             for answer in answers:
+                quiz_answer_dict = {}
                 key = Question.objects.get(pk=answer.question_id).question_text
                 # print(key)
                 quiz_dict = quiz_answer_dict[key] = {}
@@ -133,7 +153,7 @@ class ResultAdmin(admin.ModelAdmin):
 
             print(data)
         
-        payload = {"data": data}
+        payload = {"data": data,"info": info}
         return render(
             request, "admin/results.html", payload
         )
