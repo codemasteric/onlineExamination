@@ -132,9 +132,9 @@ MESSAGE_TAGS = {
 #Email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'webmail.busitema.ac.ug'
-EMAIL_HOST_USER = 'exams@busitema.ac.ug'
-EMAIL_HOST_PASSWORD = 'Busitema@2020'
+EMAIL_HOST = ''#enter own host
+EMAIL_HOST_USER = ''#enter own email host user
+EMAIL_HOST_PASSWORD = ''#enter host password
 EMAIL_PORT = 587
 
-DEFAULT_FROM_EMAIL = 'admin@exams.busitema.ac.ug'
+DEFAULT_FROM_EMAIL = ''
